@@ -21,7 +21,7 @@ const Register = () => {
             return;
         }
 
-        const response = await fetch( import.meta.env.VITE_BACKEND_API_URL + "/register", {
+        const response = await fetch( (import.meta.env.VITE_BACKEND_API_URL || "http://localhost:5000/api") + "/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -35,7 +35,7 @@ const Register = () => {
             alert("Registration successful! Please login.");
             window.location.href = "/login";
         } else {
-            setError(data.message || "Registration failed");
+            setError(data.error || data.message || "Registration failed");
         }
     };
 

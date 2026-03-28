@@ -22,7 +22,7 @@ const Login = () => {
             return;
         }
 
-        const response = await fetch( import.meta.env.VITE_BACKEND_API_URL + "/login", {
+        const response = await fetch( (import.meta.env.VITE_BACKEND_API_URL || "http://localhost:5000/api") + "/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

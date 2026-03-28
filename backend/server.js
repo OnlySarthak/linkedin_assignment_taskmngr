@@ -7,7 +7,12 @@ import cookieParser from 'cookie-parser';
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+const cors = require("cors");
+
+app.use(cors({
+  origin: "https://linkedin-assignment-taskmngr-2ttku6hlb-onlysarthaks-projects.vercel.app",
+  credentials: true
+}));
 
 app.use(express.json());
 app.use(cookieParser());

@@ -50,7 +50,8 @@ const login = async (req, res) => {
 
         res.status(200).json({ message: 'Login successful', user: { id: user._id, username: user.username, email: user.email } });
     } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
+        console.error('Login error:', error);
+        res.status(error.status || 500).json({ error: error.message || 'Internal server error' });
     }
 }
 
