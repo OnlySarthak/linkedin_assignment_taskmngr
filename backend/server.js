@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 const allowedOrigins = [
-  "https://linkedin-assignment-taskmngr.vercel.app/"
+  "https://linkedin-assignment-taskmngr.vercel.app/",
   "http://localhost:5173"
 ];
 
