@@ -5,7 +5,7 @@ import backgroundTaskProccess from '../utils/backgroundTaskProccess.js';
 
 const register = async (req, res) => {
     try {
-        const {  email, password, username } = req.body;
+        const { email, password, username } = req.body;
 
         await validateRegisterData(email, password, username);
 
@@ -24,16 +24,16 @@ const register = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    try{
-        const { email, password } = req.body; 
+    try {
+        const { email, password } = req.body;
 
-        await validateLoginData(email, password); 
+        await validateLoginData(email, password);
         const user = await User.findOne({ email });
         if (!user) {
             console.log('User not found for email:', email);
             return res.status(404).json({ error: 'User not found' });
         }
-        
+
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(401).json({ error: 'Invalid credentials' });
@@ -41,10 +41,11 @@ const login = async (req, res) => {
 
         const token = user.generateToken();
 
-        res.cookie('token', token, { 
-            httpOnly: false,
-            secure: false,
-            sameSite: 'lax',
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "None",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
             path: '/'
         });
 
@@ -56,7 +57,12 @@ const login = async (req, res) => {
 }
 
 const logout = async (req, res) => {
-    res.clearCookie('token');
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+        path: '/'
+    });
     res.status(200).json({ message: 'Logged out successfully' });
 }
 
