@@ -6,12 +6,6 @@ import Layout from "./components/layout";
 import Tasks from "./components/tasks";
 
 function App() {
-  useEffect(() => {
-    const publicPaths = ["/login", "/register"];
-    if (!publicPaths.includes(window.location.pathname) && !document.cookie.includes("token=")) {
-      window.location.href = "/login";
-    }
-  }, []);
 
   return (
     <BrowserRouter>

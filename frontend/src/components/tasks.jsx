@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Tasks = () => {
     const [tasks, setTasks] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchTasks = async () => {
@@ -13,12 +15,18 @@ const Tasks = () => {
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        credentials: "include" 
+                        credentials: "include"
                     }
                 );
 
+                if (response.status === 401) {
+                    navigate("/login");
+                    return;
+                }
+
                 const data = await response.json();
                 setTasks(data.tasks);
+
             } catch (err) {
                 console.log(err);
             }
