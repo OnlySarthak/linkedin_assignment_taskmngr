@@ -8,7 +8,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'https://linkedin-assignment-taskmngr.vercel.app/',
   credentials: true,
 }));
 
