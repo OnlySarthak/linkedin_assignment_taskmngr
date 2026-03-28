@@ -7,10 +7,7 @@ import cookieParser from 'cookie-parser';
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors({
-  origin: 'https://linkedin-assignment-taskmngr.vercel.app/',
-  credentials: true,
-}));
+app.use(cors());
 
 app.use(express.json());
 app.use(cookieParser());
@@ -20,6 +17,6 @@ app.use('/api', router);
 
 connectDB().then(() => {
   app.listen(port, '0.0.0.0', () => {
-    console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server is running on port ${port}`);
   });
 });
