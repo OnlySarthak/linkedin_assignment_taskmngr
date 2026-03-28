@@ -5,28 +5,36 @@ import router from './src/routers/routers.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
+dotenv.config();
+
 const app = express();
 const port = process.env.PORT || 5000;
 
 const allowedOrigins = [
-  "https://linkedin-assignment-taskmngr.vercel.app/",
   "http://localhost:5173"
 ];
 
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+
+    // allow localhost
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
     }
+
+    // allow all vercel domains
+    if (origin.endsWith(".vercel.app")) {
+      return callback(null, true);
+    }
+
+    return callback(new Error("Not allowed by CORS"));
   },
-  credentials: true
+  credentials: true,
 }));
 
 app.use(express.json());
 app.use(cookieParser());
-dotenv.config();
 
 app.use('/api', router);
 
