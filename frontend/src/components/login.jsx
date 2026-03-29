@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { validateLoginData } from "../utils/validation";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const handleRegister = () => {
-        window.location.href = "/register";
+        navigate("/register");
     }
     
     const handleLogin = async () => {
@@ -36,7 +38,7 @@ const Login = () => {
         if (response.ok) {
             
             alert("Login successful!");
-            window.location.href = "/"; 
+            navigate("/");
         } else {
             setError(data.error || data.message || "Login failed");
         }

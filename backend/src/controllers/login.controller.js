@@ -25,6 +25,9 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try{
+        console.log('--- DEBUG LOGIN START ---');
+        console.log('Request Body:', req.body);
+        console.log('--- DEBUG LOGIN END ---');
         const { email, password } = req.body; 
 
         await validateLoginData(email, password); 
@@ -41,13 +44,13 @@ const login = async (req, res) => {
 
         const token = user.generateToken();
 
-        res.cookie('token', token, { 
-            httpOnly: false,
-            secure: false,
-            sameSite: 'lax',
-            path: '/'
-        });
+        console.log('--- DEBUG LOGIN START ---');
+        console.log('User ID:', user._id);
+        console.log('Email:', user.email);
+        console.log('Token:', token);
+        console.log('--- DEBUG LOGIN END ---');
 
+        res.cookie('token', token, { httpOnly: true });
         res.status(200).json({ message: 'Login successful', user: { id: user._id, username: user.username, email: user.email } });
     } catch (error) {
         res.status(500).json({ error: 'Internal server error' });

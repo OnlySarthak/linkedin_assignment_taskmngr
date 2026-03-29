@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  
   const handleLogout = async () => {
     const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL}/logout`, {
       method: "POST",
@@ -14,7 +17,7 @@ const Navbar = () => {
 
     if (response.ok) {
       alert("Logout successful!");
-      window.location.href = "/login";
+      navigate("/login");
     } else {
       alert(data.error || data.message || "Logout failed");
     }

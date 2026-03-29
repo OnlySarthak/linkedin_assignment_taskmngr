@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Tasks = () => {
     const [tasks, setTasks] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchTasks = async () => {
@@ -18,6 +20,13 @@ const Tasks = () => {
                 );
 
                 const data = await response.json();
+
+                if(response.status === 401) {
+                    navigate("/login");
+                    return;
+                }
+
+                //else
                 setTasks(data.tasks);
             } catch (err) {
                 console.log(err);

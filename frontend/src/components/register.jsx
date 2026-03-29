@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { validateRegisterData } from "../utils/validation";
-
-
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
+    const navigate = useNavigate();
     const [error, setError] = useState("");
 
     const handleRegister = async () => {
@@ -33,7 +33,7 @@ const Register = () => {
 
         if (response.ok) {
             alert("Registration successful! Please login.");
-            window.location.href = "/login";
+            navigate("/login");
         } else {
             setError(data.message || "Registration failed");
         }
@@ -70,7 +70,7 @@ const Register = () => {
                 {error && <div className="text-error">{error}</div>}
                 <button className="btn btn-neutral mt-4" onClick={() => handleRegister()}>Register</button>
                 <div className="divider">OR</div>
-                <button className="btn btn-ghost mt-4" onClick={() => window.location.href = "/login"}>Back to Login</button>
+                <button className="btn btn-ghost mt-4" onClick={() => navigate("/login")}>Back to Login</button>
             </fieldset>
         </div>
     )
